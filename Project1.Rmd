@@ -27,14 +27,14 @@ ads$view_count_perk <- ads$view_count/1000
 
 # Making the graph
 ads_ggplot <- ggplot(ads)
-ads_ggplot + geom_histogram(aes(x=view_count_perk),binwidth=20000, col='black',fill='dark green') + labs(title='View Count of Super Bowl Ads',x='Number of Views (in thousands)', y= 'Frequency') + scale_fill_brewer(type='qual',palette=2) + theme_classic()
+ads_ggplot + geom_histogram(aes(x=view_count_perk),binwidth=20000, col='black',fill='dark green') + labs(title='View Count of Super Bowl Ads',x='Number of Views (in thousands)', y= 'Frequency') + scale_fill_brewer(type='qual',palette=2) + theme_classic()+theme(plot.title = element_text(hjust = 0.5)) 
 ```
 
 Above is the graph of view counts with outliers included.
 
 
 ```{r echo=FALSE}
-ads_ggplot + geom_histogram(aes(x=view_count_perk),binwidth=1000, col='black',fill='dark green') + labs(title='View Count of Super Bowl Ads',x='Number of Views (in thousands)', y= 'Frequency') + scale_fill_brewer(type='qual',palette=2) + theme_classic() + xlim(c(0,10000)) +ylim(c(0,20))
+ads_ggplot + geom_histogram(aes(x=view_count_perk),binwidth=1000, col='black',fill='dark green') + labs(title='View Count of Super Bowl Ads',x='Number of Views (in thousands)', y= 'Frequency') + scale_fill_brewer(type='qual',palette=2) + theme_classic() + xlim(c(0,10000)) +ylim(c(0,20))+theme(plot.title = element_text(hjust = 0.5)) 
 ```
 
 The above graph shows the distribution of the view counts of ads with under 10,000,000 to account for outliers, and the graph is positively skewed. The median number of view counts in thousands is `r round(median(ads$view_count_perk, na.rm=TRUE),2)` and the interquartile range is `r round(IQR(ads$view_count_perk, na.rm=TRUE),2)`.
@@ -48,7 +48,7 @@ ads$interactions<- ads$like_count + ads$view_count + ads$comment_count
 
 # Making graph
 ads_ggplot <- ggplot(ads)
-ads_ggplot + geom_point(aes(x=interactions/1000,y=view_count_perk)) + labs(title='Interactions and View Count', x='Interaction Count (in thousands)',y='View Count (in thousands)') + theme_classic() + xlim(c(0,10000)) + ylim(c(0,10000))
+ads_ggplot + geom_point(aes(x=interactions/1000,y=view_count_perk)) + labs(title='Interactions and View Count', x='Interaction Count (in thousands)',y='View Count (in thousands)') + theme_classic() + xlim(c(0,10000)) + ylim(c(0,10000))+theme(plot.title = element_text(hjust = 0.5)) 
 ```
 
 The above graph includes all interaction counts and view counts under 10 million. The correlation coefficient is `r round(cor(ads$interactions/1000,ads$view_count_perk, use = "complete.obs"),2)`. The graph and correlation coefficient suggest an <span style="color: red;">extremely strong positive</span> correlation between view counts and the number of likes, dislikes, and comments the ad received.
@@ -56,7 +56,7 @@ The above graph includes all interaction counts and view counts under 10 million
 
 ## View Count and Celebrities
 ```{r echo=FALSE}
-ggplot(ads, aes(x = celebrity, y = view_count_perk, fill = celebrity)) + geom_boxplot() + coord_flip() + labs(title='View Count and Celebrities',x='Presence of Celebrity', y= 'View Count (in thousands)') +theme_classic() +ylim(c(0,1000))
+ggplot(ads, aes(x = celebrity, y = view_count_perk, fill = celebrity)) + geom_boxplot() + coord_flip() + labs(title='View Count and Celebrities',x='Presence of Celebrity', y= 'View Count (in thousands)') +theme_classic() +ylim(c(0,1000))+theme(plot.title = element_text(hjust = 0.5)) 
 ```
 
 The graph above shows the distribution of view counts in thousands based on if there was a celebrity present in the ad or not. Only view counts under 1 million were included to account for extreme outliers.
@@ -83,7 +83,7 @@ The median view count for ads without a celebrity feature is 9,360 views higher 
 
 ## View Count and Animals
 ```{r echo=FALSE}
-ggplot(ads, aes(x = animals, y = view_count_perk, fill = animals)) + geom_boxplot() + coord_flip() + labs(title='View Count and Animals',x='Presence of Animals', y= 'View Count (in thousands') + theme_classic()+ ylim(c(0,1000))
+ggplot(ads, aes(x = animals, y = view_count_perk, fill = animals)) + geom_boxplot() + coord_flip() + labs(title='View Count and Animals',x='Presence of Animals', y= 'View Count (in thousands') + theme_classic()+ ylim(c(0,1000))+theme(plot.title = element_text(hjust = 0.5)) 
 ```
 
 The graph above shows the distribution of view counts in thousands based on if there was an animal present in the ad or not. Only view counts under 1 million were included to account for outliers.
